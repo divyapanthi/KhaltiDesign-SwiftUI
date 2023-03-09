@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "Dashain-Bela-Sastodeal-Mela-in-association-with-Khalti_Pay-via-Khalti.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
