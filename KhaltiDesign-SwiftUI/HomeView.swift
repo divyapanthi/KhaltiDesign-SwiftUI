@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    
     var body: some View {
-        
-        let gridItems = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()) ]
-        
+    
         ScrollView(showsIndicators: false) {
             VStack {
                 VStack {
@@ -27,35 +26,9 @@ struct HomeView: View {
                         }.padding()
                         Spacer()
                         HStack(spacing: 20) {
-                            Button(action: {
-                                // Action to perform when the button is tapped
-                            }) {
-                                Image(systemName: "magnifyingglass")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.white)
-                            }
-                            Button(action: {
-                                // Action to perform when the button is tapped
-                            }) {
-                                Image(systemName: "gift.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.yellow)
-                            }
-                            Button(action: {
-                                // Action to perform when the button is tapped
-                            }) {
-                                Image(systemName: "bell.badge.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.white)
-                            }
+                            ButtonImageView(systemImage: "magnifyingglass", imageWidth: 20, imageHeight: 20, imageAccentColor: .white)
+                            ButtonImageView(systemImage: "gift.fill", imageWidth: 20, imageHeight: 20, imageAccentColor: .pink)
+                            ButtonImageView(systemImage: "bell.badge.fill", imageWidth: 20, imageHeight: 20, imageAccentColor: .white)
                         }.padding(.trailing)
                     }
                     HStack(alignment: .center) {
@@ -63,14 +36,10 @@ struct HomeView: View {
                             HStack() {
                                 Text("Rs.")
                                 Text("XXX.XX")
+                                    .fontWeight(.bold)
                             }
                             HStack() {
-                                Button(action: {
-                                    // Action to perform when the button is tapped
-                                }) {
-                                    Image(systemName: "eye")
-                                        .font(.system(size: 16))
-                                }
+                                ButtonImageView(systemImage: "eye", imageWidth: 20, imageHeight: 20)
                                 Text("Khalti Balance")
                                     .font(.system(size: 12))
                             }
@@ -85,38 +54,12 @@ struct HomeView: View {
                         Spacer()
                         
                         VStack {
-                            Button(action: {
-                                // Action to perform when the button is tapped
-                            }) {
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 50, height: 40)
-                                    .overlay(
-                                        Image("addMoney")
-                                            .resizable()
-                                            .frame(width: 25, height: 25, alignment: .center)
-                                            .foregroundColor(Color("PrimaryColor"))
-                                    )
-                            }
-                            Text("Add Money")
-                                .font(.system(size: 12))
+                            CircleButtonImageView(image: "addMoney")
+                            CustomTextView(title: "Add Money")
                         }
                         VStack {
-                            Button(action: {
-                                // Action to perform when the button is tapped
-                            }) {
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 50, height: 40)
-                                    .overlay(
-                                        Image("sendMoney")
-                                            .resizable()
-                                            .frame(width: 30, height: 30, alignment: .center)
-                                            .foregroundColor(Color("PrimaryColor"))
-                                    )
-                            }
-                            Text("Send Money")
-                                .font(.system(size: 12))
+                            CircleButtonImageView(image: "sendMoney")
+                            CustomTextView(title: "Send Money")
                         }
                         
                     }.padding()
@@ -168,55 +111,8 @@ struct HomeView: View {
                     ).padding(.horizontal, 8)
                         .padding(.vertical, 8)
                     
-                    VStack {
-                        Text("Recharge and Bill Payments")
-                            .font(.system(size: 16))
-                            .fontWeight(.medium)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 12)
-                        
-                        LazyVGrid(columns: gridItems, alignment: .center, spacing: 2) {
-                            ForEach(payments) { item in
-                                VStack(alignment: .center, spacing: 10) {
-                                    Button(action: {
-                                        // handle button tap
-                                    }, label: {
-                                        Image(systemName: item.imageIcon)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 22, height: 22)
-                                            .accentColor(Color("PrimaryColor"))
-                                    })
-                                    Text(item.title)
-                                        .font(.system(size: 13))
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                        .frame(width: 100, height: 36)
-                                        .padding(.horizontal, 4)
-                                    
-                                    if(item.cashback == "") {
-                                        Text("")
-                                        
-                                    } else {
-                                        Text(item.cashback)
-                                            .font(.system(size: 10))
-                                            .foregroundColor(.white)
-                                            .padding(.horizontal, 4)
-                                            .padding(.vertical, 2)
-                                            .background(Color("SecondaryColor"))
-                                            .cornerRadius(8)
-                                    }
-                                }.frame(width: 90, height: 120, alignment: .center)
-                                
-                            }
-                        }
-                        .padding()
-                        
-                    }
-                    .padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
-                    
+                    RechargeAndPaymentGridView()
+
                     Spacer()
                     VStack {
                         Image("ad1")
@@ -236,37 +132,9 @@ struct HomeView: View {
                     .cornerRadius(8)
                     
                     VStack {
-                        Text("Featured Services")
-                            .font(.system(size: 16))
-                            .fontWeight(.medium)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 12)
+                        TitleTextView(title: "Featured Services")
                         
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(featuredServices) { item in
-                                    VStack {
-                                        Button(action: {
-                                            // handle button tap
-                                        }, label: {
-                                            Image(systemName: item.image)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 30, height: 24)
-                                                .accentColor(Color("PrimaryColor"))
-                                        })
-                                        Text(item.title)
-                                            .font(.system(size: 12))
-                                            .multilineTextAlignment(.center)
-                                            .lineLimit(2)
-                                            .frame(width: 80, height: 36)
-                                    }.frame(width: 84, height: 80, alignment: .center)
-                                    //                                        .multilineTextAlignment(.center)
-                                    
-                                }
-                            }.padding(.horizontal, 12)
-                            
-                        }
+                        HorizontalScrollView(test: featuredServices)
                     }.padding(.vertical, 12)
                         .background(.white)
                         .cornerRadius(8)
@@ -389,9 +257,7 @@ struct HomeView: View {
                                         Button(action: {
                                             // Action to perform when the button is tapped
                                         }) {
-                                            Image(item.image)
-                                                .resizable()
-                                                .scaledToFit()
+                                            AsyncImage(url: URL(string: "https://dao578ztqooau.cloudfront.net/static/category_icons/v5/tv.svg"))
                                                 .frame(width: 60, height: 60)
                                             
                                         }
@@ -593,19 +459,13 @@ struct HomeView: View {
                                             .strokeBorder(Color("PrimaryColor"), lineWidth: 0.4)
                                         
                                     )
-                                    
-                                    Text(item.title)
-                                        .font(.system(size: 12))
-                                        .lineLimit(2)
-                                        .multilineTextAlignment(.center)
-                                        .frame(width: 110, height: 40)
-                                        .padding(.horizontal, 4)
+                                    CustomTextView(title: item.title, textWidth: 110, textHeight: 40)
                                 }.frame(width: 110, alignment: .center)
                             }
                         }.padding(.horizontal)
                         
                     }
-
+                    
                     VStack {
                         Image("ad3")
                             .resizable()
@@ -666,18 +526,18 @@ struct HomeView: View {
                         maxHeight: .infinity,
                         alignment: .topLeading)
                 .padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
+                .background(.white)
+                .cornerRadius(8)
                 
-
+                
                 VStack {
                     ForEach(supportList) { support in
                         HStack(alignment: .center, spacing: 20) {
                             Image(systemName: support.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 26, height: 26, alignment: .center)
-                                .foregroundColor(Color("PrimaryColor"))
+                                .frame(width: 22, height: 22, alignment: .center)
+                                .foregroundColor(Color.black.opacity(0.7))
                             
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(support.title)
@@ -688,15 +548,23 @@ struct HomeView: View {
                             }
                         }.padding(12)
                     }
-                }   .padding(.leading, 20)
-                    .padding(.top, 10)
-                    .padding(.bottom, 20)
+                }.frame(minWidth: 0,
+                       maxWidth: .infinity,
+                       minHeight: 0,
+                       maxHeight: .infinity,
+                       alignment: .topLeading)
+                .padding(.vertical, 12)
                     .background(.white)
                     .cornerRadius(8)
+                
             }
             
         }.background(.gray.opacity(0.15))
-            .edgesIgnoringSafeArea(.all)
+        
+            .onAppear{
+                UIScrollView.appearance().bounces = false
+            }
+            .edgesIgnoringSafeArea(.top)
     }
 }
 
@@ -710,3 +578,135 @@ struct ContentView_Previews: PreviewProvider {
 
 
 
+
+struct RechargeAndPaymentGridView: View {
+    
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()) ]
+    
+    var body: some View {
+        VStack {
+            TitleTextView(title: "Recharge and Bill Payments")
+            LazyVGrid(columns: columns, alignment: .center) {
+                ForEach(payments) { item in
+                    VStack(alignment: .center, spacing: 4) {
+                        ButtonImageView(systemImage: item.imageIcon, imageWidth: 22, imageHeight: 22, imageAccentColor: Color("PrimaryColor"))
+                        CustomTextView(title: item.title, textWidth: 100, textHeight: 36)
+                        
+                        if(item.cashback.isEmpty) {
+                            Text("")
+                            
+                        } else {
+                            Text(item.cashback)
+                                .font(.system(size: 9))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 2)
+                                .background(Color("SecondaryColor"))
+                                .cornerRadius(8)
+                        }
+                    }.frame(width: 90, height: 120, alignment: .center)
+                    
+                }
+            }
+            .padding(.horizontal, 20)
+            
+        }
+        
+        .padding(.vertical, 12)
+        .background(.white)
+        .cornerRadius(8)
+    }
+}
+
+struct CustomTextView: View {
+    
+    var title: String
+    var textWidth: CGFloat?
+    var textHeight: CGFloat?
+    var fontSize: CGFloat?
+    
+    var body: some View {
+        Text(title)
+            .font(.system(size: fontSize ?? 12))
+            .multilineTextAlignment(.center)
+            .frame(width: textWidth, height: textHeight)
+            .padding(.horizontal, 4)
+    }
+}
+
+struct ButtonImageView: View {
+    
+    var systemImage: String
+    var imageWidth: CGFloat?
+    var imageHeight: CGFloat?
+    var imageAccentColor: Color?
+
+    var body: some View {
+        
+        Button(action: {
+            // Action to perform when the button is tapped
+        }) {
+            Image(systemName: systemImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: imageWidth, height: imageHeight)
+                .foregroundColor(imageAccentColor)
+        }
+
+    }
+}
+
+struct CircleButtonImageView: View {
+    
+    var image: String
+    var circleWidth: CGFloat?
+    var circleHeight: CGFloat?
+    var imageHeight: CGFloat?
+    var imageWidth: CGFloat?
+    
+    var body: some View {
+        Button(action: {
+            // Action to perform when the button is tapped
+        }) {
+            Circle()
+                .fill(Color.white)
+                .frame(width: circleWidth ?? 50, height: circleHeight ?? 40)
+                .overlay(
+                    Image("addMoney")
+                        .resizable()
+                        .frame(width: imageWidth ?? 25, height: imageHeight ?? 25, alignment: .center)
+                        .foregroundColor(Color("PrimaryColor"))
+                )
+        }
+    }
+}
+
+struct TitleTextView: View {
+    var title: String
+    var body: some View {
+        Text(title)
+            .font(.system(size: 14))
+            .fontWeight(.medium)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 12)
+    }
+}
+
+struct HorizontalScrollView: View {
+    
+    var test: [Service] = []
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(featuredServices) { item in
+                    VStack {
+                        ButtonImageView(systemImage: item.image, imageWidth: 30, imageHeight: 24, imageAccentColor: Color("PrimaryColor"))
+                        CustomTextView(title: item.title, textWidth: 80, textHeight: 36)
+                    }.frame(width: 84, height: 80, alignment: .center)
+                }
+            }.padding(.horizontal, 12)
+            
+        }
+    }
+}
