@@ -8,95 +8,22 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var isRupeesHidden = true
-    
     var body: some View {
         
         ScrollView(showsIndicators: false) {
             VStack {
-                VStack {
-                    HStack {
-                        HStack(spacing: 1) {
-                            Image("girl")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 30)
-                                .clipShape(Circle())
-                            Text("Divya")
-                                .fontWeight(.bold)
-                        }.padding()
-                        Spacer()
-                        HStack(spacing: 20) {
-                            ImageButtonView(systemImage: "magnifyingglass", imageWidth: 16, imageHeight: 16, imageAccentColor: .white, action: {})
-                            ImageButtonView(systemImage: "gift.fill", imageWidth: 20, imageHeight: 20, imageAccentColor: .pink, action: {})
-                            ImageButtonView(systemImage: "bell.badge.fill", imageWidth: 18, imageHeight: 18, imageAccentColor: .white, action: {})
-                        }.padding(.trailing)
-                    }
-                    
-                    HStack(alignment: .center) {
-                        ZStack {
-                            VStack(alignment: .leading, spacing: 10) {
-                                HStack() {
-                                    CustomTextView(title: "रु", fontSize: 20)
-                                    let khaltiRupees = isRupeesHidden ? Text("XXX.XX") : Text("2000.00")
-                                    khaltiRupees.fontWeight(.bold)
-                                }
-                                HStack() {
-                                    ImageButtonView(systemImage: isRupeesHidden ? "eye" : "eye.slash", imageWidth: 20, imageHeight: 20, action: {
-                                        isRupeesHidden.toggle()
-                                    })
-                                    Text("Khalti Balance")
-                                        .font(.system(size: 12))
-                                }
-                            }
-                            .frame(
-                                width: 140,
-                                height: 80)
-                            .foregroundColor(Color("PrimaryColor"))
-                            .padding(.trailing, 40)
-                            .padding(.trailing, -20) // add negative padding here to allow button to be fully visible outside VStack
-
-                            .background(.white)
-                            .cornerRadius(8)
-                        .overlay(
-                            CircleButtonImageView(useSystemImage: true, systemImage: "arrow.triangle.2.circlepath", circleColor: Color("PrimaryColor").opacity(0.2), circleWidth: 24, circleHeight: 20, imageHeight: 14, imageWidth: 14, action: {})
-//                                .frame(width: 30, height: 30)
-                                .background(.white)
-                                            .offset(x: 90, y: -5)
-                                            .zIndex(1)
-                        )
-//                        .padding(.trailing, 30)
-                                .zIndex(1)
-                        }
-                            
-                        
-                        Spacer(minLength: 20)
-                        
-                        VStack {
-                            CircleButtonImageView(useSystemImage: false, imageName: "addMoney", action: {})
-                            CustomTextView(title: "Add Money")
-                        }
-                        VStack {
-                            CircleButtonImageView(useSystemImage: false, imageName: "sendMoney", action: {})
-                            CustomTextView(title: "Send Money")
-                        }
-                        
-                    }.padding()
-                }
-                .frame(
-                    minWidth: 0,
-                    maxWidth: .infinity,
-                    minHeight: 0,
-                    maxHeight: 200,
-                    alignment: .topLeading
-                )
+                TopView()
+                    .withFrame(FrameOptions(
+                        alignment: .topLeading, minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: 200
+                    ))
                 
-                .foregroundColor(.white)
-                .padding(.top, 35)
-                .background(Color("PrimaryColor"))
-                .cornerRadius(8)
-                .edgesIgnoringSafeArea(.all)
-                
+                    .foregroundColor(.white)
+                    .padding(.top, 35)
+                    .background(Color("PrimaryColor"))
+                    .cornerRadius(8)
                 
                 VStack {
                     HStack {
@@ -115,16 +42,7 @@ struct HomeView: View {
                         
                         
                         Spacer()
-                        Button(action: {
-                            // add action here
-                        }) {
-                            Text("Buy Tickets")
-                                .fontWeight(.bold)
-                                .font(.system(size: 14))
-                                .foregroundColor(Color("CashbackBackground"))
-                                .padding(.vertical, 4)
-                                .padding(.horizontal, 4)
-                        }
+                        TextButton(title: "Buy Tickets", textColor: Color("CashbackBackground"), action: {})
                     }.addBorder(color: Color("CashbackBackground"), width: 0.8, cornerRadius: 4)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 8)
@@ -170,7 +88,7 @@ struct HomeView: View {
                                     Image(item.image)
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: 350, height: 110)
+                                        .withFrame(FrameOptions(width: 350, height: 110))
                                         .cornerRadius(8)
                                         .padding(.leading, 20)
                                         .padding(.trailing, 20)
@@ -181,11 +99,10 @@ struct HomeView: View {
                         }
                         
                     }
-                    .frame(minWidth: 0,
-                           maxWidth: .infinity,
-                           minHeight: 0,
-                           maxHeight: .infinity,
-                           alignment: .topLeading)
+                    .withFrame(FrameOptions(alignment: .topLeading, minWidth: 0,
+                                            maxWidth: .infinity,
+                                            minHeight: 0,
+                                            maxHeight: .infinity))
                     .background(.white)
                     .cornerRadius(8)
                     
@@ -250,7 +167,7 @@ struct HomeView: View {
                                 Image(item.image)
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(width: 350, height: 110)
+                                    .withFrame(FrameOptions(width: 350, height: 110, alignment: .leading))
                                     .cornerRadius(8)
                                     .padding(.leading, 20)
                                     .padding(.trailing, 20)
@@ -275,7 +192,7 @@ struct HomeView: View {
                         Image("ad3")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: .infinity, height: 80)
+                            .withFrame(FrameOptions(width: .infinity, height: 80))
                             .cornerRadius(8)
                         
                         Spacer(minLength: 30)
@@ -314,7 +231,7 @@ struct HomeView: View {
                             Image(systemName: support.image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 22, height: 22, alignment: .center)
+                                .withFrame(FrameOptions(width: 22, height: 22, alignment: .center))
                                 .foregroundColor(Color.black.opacity(0.7))
                             
                             VStack(alignment: .leading, spacing: 10) {
@@ -398,86 +315,6 @@ struct RechargeAndPaymentGridView: View {
     }
 }
 
-struct CustomTextView: View {
-    
-    var title: String
-    var textWidth: CGFloat?
-    var textHeight: CGFloat?
-    var fontSize: CGFloat?
-    
-    var body: some View {
-        Text(title)
-            .font(.system(size: fontSize ?? 12))
-            .multilineTextAlignment(.center)
-            .frame(width: textWidth, height: textHeight)
-            .padding(.horizontal, 4)
-    }
-}
-
-struct ImageButtonView: View {
-    
-    var systemImage: String
-    var imageName: String?
-    var imageWidth: CGFloat?
-    var imageHeight: CGFloat?
-    var imageAccentColor: Color?
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            let image = imageName != nil ? Image(imageName!) : Image(systemName: systemImage)
-            image.resizable()
-                .scaledToFit()
-                .frame(width: imageWidth, height: imageHeight)
-                .foregroundColor(imageAccentColor)
-        }
-    }
-}
-
-struct CircleButtonImageView: View {
-    
-    var useSystemImage: Bool = true
-    
-    var imageName: String?
-    var systemImage: String?
-    var imageColor: Color?
-    var circleColor: Color?
-    var circleWidth: CGFloat?
-    var circleHeight: CGFloat?
-    var imageHeight: CGFloat?
-    var imageWidth: CGFloat?
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            Circle()
-                .fill(circleColor ?? .white)
-                .frame(width: circleWidth ?? 50, height: circleHeight ?? 40)
-                .overlay(
-                    Group {
-                        if useSystemImage {
-                            Image(systemName: systemImage ?? "").resizable()
-                        } else if let imageName = imageName {
-                            Image(imageName).resizable()
-                        }
-                    }
-                        .frame(width: imageWidth ?? 25, height: imageHeight ?? 25, alignment: .center)
-                        .foregroundColor(imageColor ?? Color("PrimaryColor"))
-                )
-        }
-    }
-}
-
-struct TitleTextView: View {
-    var title: String
-    var body: some View {
-        Text(title)
-            .font(.system(size: 14))
-            .fontWeight(.medium)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 12)
-    }
-}
 
 struct HorizontalScrollView: View {
     
@@ -525,5 +362,97 @@ struct BorderedHStack: View {
                 }.frame(width: 110, alignment: .center)
             }
         }.padding(.horizontal)
+    }
+}
+
+struct BalanceView: View {
+    @State private var isRupeesHidden = true
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack() {
+                CustomTextView(title: "रु", fontSize: 20)
+                let khaltiRupees = isRupeesHidden ? Text("XXX.XX") : Text("2000.00")
+                khaltiRupees.fontWeight(.bold)
+            }
+            HStack() {
+                ImageButtonView(systemImage: isRupeesHidden ? "eye.fill" : "eye.slash.fill", imageWidth: 20, imageHeight: 20, imageAccentColor: Color("PrimaryColor"), action: {
+                    isRupeesHidden.toggle()
+                })
+                Text("Khalti Balance")
+                    .font(.system(size: 11))
+            }
+        }
+        .frame(
+            width: 140,
+            height: 80)
+        .foregroundColor(Color("PrimaryColor"))
+        .padding(.trailing, 30)
+        .padding(.leading, -10)
+        
+        .background(.white)
+        .cornerRadius(8)
+    }
+}
+
+struct ReloadBalanceButton: View {
+    @State private var angle = 0.0
+    var body: some View {
+        ZStack {
+            Group {
+                Circle()
+                    .foregroundColor(Color("SecondaryColor"))
+                    .frame(width: 20, height: 24)
+                    .addShadow()
+                ImageButtonView(systemImage: "arrow.triangle.2.circlepath", imageWidth: 14, imageHeight: 14, imageAccentColor: Color("PrimaryColor"), action: {
+                    angle += 450
+                })
+                .font(Font.title.weight(.bold))
+            }    .rotationEffect(.degrees(angle))
+                .animation(.easeIn(duration: 1.5), value: angle)
+            
+            
+        }.offset(x: 80)
+        
+    }
+}
+
+struct TopView: View {
+    var body: some View {
+        HStack {
+            HStack(spacing: 1) {
+                Image("girl")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 30)
+                    .clipShape(Circle())
+                Text("Divya")
+                    .fontWeight(.bold)
+            }.padding()
+            Spacer()
+            HStack(spacing: 20) {
+                ImageButtonView(systemImage: "magnifyingglass", imageWidth: 16, imageHeight: 16, imageAccentColor: .white, action: {})
+                ImageButtonView(systemImage: "gift.fill", imageWidth: 20, imageHeight: 20, imageAccentColor: .pink, action: {})
+                ImageButtonView(systemImage: "bell.badge.fill", imageWidth: 18, imageHeight: 18, imageAccentColor: .white, action: {})
+            }.padding(.trailing)
+        }
+        
+        HStack(alignment: .center) {
+            ZStack {
+                BalanceView()
+                ReloadBalanceButton()
+            }
+            
+            Spacer(minLength: 20)
+            
+            VStack {
+                CircleButtonImageView(useSystemImage: false, imageName: "addMoney", action: {})
+                CustomTextView(title: "Add Money")
+            }
+            VStack {
+                CircleButtonImageView(useSystemImage: false, imageName: "sendMoney", action: {})
+                CustomTextView(title: "Send Money")
+            }
+            
+        }.padding()
     }
 }

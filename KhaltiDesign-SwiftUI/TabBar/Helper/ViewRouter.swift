@@ -12,7 +12,6 @@ class ViewRouter: ObservableObject {
     @Published var currentPage: Page = .home  // publised notifies all observing  views to update themselves whenever the page assigned to the current view variable changes
     
 }
-
  
 enum Page {
     case home

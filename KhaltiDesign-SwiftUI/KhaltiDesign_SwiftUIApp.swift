@@ -12,7 +12,7 @@ struct KhaltiDesign_SwiftUIApp: App {
     @StateObject var viewRouter =  ViewRouter()
     var body: some Scene {
         WindowGroup {
-            CustomTabBar(viewRouter: viewRouter)
+            KhaltiTabBar(viewRouter: viewRouter)
         }
     }
 }

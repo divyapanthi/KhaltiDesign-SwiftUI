@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+struct KhaltiTabBar: View {
+    
+    @State private var qrAnimate = false
+    @State private var isButtonAnimating = false
+    
+    @State private var isHomePage = false
 
-
-struct CustomTabBar: View {
     
     @StateObject var viewRouter: ViewRouter
     
@@ -22,22 +26,22 @@ struct CustomTabBar: View {
                     HomeView()
                     
                 case .support:
-                    HomeView()
+                    Text("Support")
                     
                 case .scanPay:
-                    HomeView()
+                    Text("Scan and pay")
                     
                 case .transactions:
                     Text("Transactions")
                     
                 case .menu:
-                    HomeView()
+                    Text("Menu")
                     
                     
                 }
                 Spacer()
                 HStack {
-                    TabBarIcon(viewRouter: viewRouter, assignedPage: .home, width: geometry.size.width/6, height: geometry.size.width/22, systemIconName: "house.fill", tabName: "Home")
+                    TabBarIcon(viewRouter: viewRouter, assignedPage: .home, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "house.fill", tabName: "Home")
                     TabBarIcon(viewRouter: viewRouter, assignedPage: .support, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "phone.and.waveform.fill", tabName: "Support")
                     
                     if viewRouter.currentPage == .home {
@@ -45,29 +49,49 @@ struct CustomTabBar: View {
                             ZStack {
                                 Circle()
                                     .foregroundColor(Color("PrimaryColor"))
-                                    .frame(width: geometry.size.width/7, height: geometry.size.width/7)
+                                    .frame(width: geometry.size.width/8, height: geometry.size.width/8)
                                     .shadow(radius: 2)
+
                                 Image(systemName: "qrcode")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: geometry.size.width/9-18, height: geometry.size.width/9-18)
-                                    .foregroundColor(.white)
-                                
+                                    .frame(width: qrAnimate ? geometry.size.width/10-18 : 0 , height: qrAnimate ? geometry.size.width/10-18 : 0)
+                                    .foregroundColor(qrAnimate ? .white : .red)
+                                    .opacity(qrAnimate ? 1: 0)
+                                    .animation(qrAnimate ? .easeInOut(duration: 1.2) : .easeOut(duration: 1.2), value: qrAnimate)
+                            }.onAppear {
+                                self.qrAnimate = true
+                                isButtonAnimating = false
                             }
+                            .onDisappear{
+                                self.qrAnimate = false
+                                isButtonAnimating = true
+                            }
+                            .scaleEffect(isButtonAnimating ? 1.5: 1.0)
+                                .animation(.easeInOut(duration: 1.2), value: isButtonAnimating)
+                                .onChange(of: viewRouter.currentPage) { newValue in
+                                    if newValue != .home {
+                                        qrAnimate = false
+                                    }
+                                }
                             Text("Scan & Pay")
                                 .fontWeight(.regular)
                                 .font(.system(size: 10))
                                 .foregroundColor(.black
                                     .opacity(0.5))
-                        }.offset(y: -geometry.size.height/9/3)
+                                .padding(.top, 4)
+                        }
+                        .offset(y: -geometry.size.height/9/3)
                     }
                     
                     else {
-                        TabBarIcon(viewRouter: viewRouter, assignedPage: .transactions, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "qrcode", tabName: "Scan & Pay")
+                        TabBarIcon(viewRouter: viewRouter, assignedPage: .scanPay, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "qrcode", tabName: "Scan & Pay")
                     }
-                    
+
                     TabBarIcon(viewRouter: viewRouter, assignedPage: .transactions, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "newspaper.fill", tabName: "Transaction")
+                    
                     TabBarIcon(viewRouter: viewRouter, assignedPage: .menu, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "square.grid.3x3", tabName: "Menu")
+
                     
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height/10)
@@ -80,16 +104,17 @@ struct CustomTabBar: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTabBar(viewRouter: ViewRouter())
+        KhaltiTabBar(viewRouter: ViewRouter())
     }
 }
 
 struct TabBarIcon: View {
+
     @StateObject var viewRouter: ViewRouter
-    @State var isSelectedIndex = 0
     let assignedPage: Page
     let width, height: CGFloat
     let systemIconName, tabName: String
+    
     var body: some View {
         VStack {
             Image(systemName: systemIconName)
@@ -104,7 +129,10 @@ struct TabBarIcon: View {
         }
         .padding(.horizontal, -4)
         .onTapGesture {
-            viewRouter.currentPage = assignedPage
+            withAnimation(.easeInOut(duration: 0.8)) {
+                viewRouter.currentPage = assignedPage
+
+            }
         }
         .foregroundColor(viewRouter.currentPage == assignedPage ? Color("PrimaryColor") : .black.opacity(0.5))
         
