@@ -34,6 +34,7 @@ struct HomeView: View {
                     }
                     
                     HStack(alignment: .center) {
+                        ZStack {
                             VStack(alignment: .leading, spacing: 10) {
                                 HStack() {
                                     CustomTextView(title: "रु", fontSize: 20)
@@ -53,16 +54,21 @@ struct HomeView: View {
                                 height: 80)
                             .foregroundColor(Color("PrimaryColor"))
                             .padding(.trailing, 40)
+                            .padding(.trailing, -20) // add negative padding here to allow button to be fully visible outside VStack
+
                             .background(.white)
                             .cornerRadius(8)
                         .overlay(
-                            ZStack(alignment: .trailing, content: {
-                                CircleButtonImageView(useSystemImage: true, systemImage: "arrow.triangle.2.circlepath", circleColor: Color("PrimaryColor").opacity(0.2), circleWidth: 24, circleHeight: 20, imageHeight: 14, imageWidth: 14, action: {})
-                                    .offset(x: 90)
-                                    .zIndex(1)
-                            })
-                            
+                            CircleButtonImageView(useSystemImage: true, systemImage: "arrow.triangle.2.circlepath", circleColor: Color("PrimaryColor").opacity(0.2), circleWidth: 24, circleHeight: 20, imageHeight: 14, imageWidth: 14, action: {})
+//                                .frame(width: 30, height: 30)
+                                .background(.white)
+                                            .offset(x: 90, y: -5)
+                                            .zIndex(1)
                         )
+//                        .padding(.trailing, 30)
+                                .zIndex(1)
+                        }
+                            
                         
                         Spacer(minLength: 20)
                         
@@ -115,11 +121,11 @@ struct HomeView: View {
                             Text("Buy Tickets")
                                 .fontWeight(.bold)
                                 .font(.system(size: 14))
-                                .foregroundColor(Color("SecondaryColor"))
+                                .foregroundColor(Color("CashbackBackground"))
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, 4)
                         }
-                    }.addBorder(color: Color("SecondaryColor"), width: 0.8, cornerRadius: 4)
+                    }.addBorder(color: Color("CashbackBackground"), width: 0.8, cornerRadius: 4)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 8)
                     
@@ -318,6 +324,7 @@ struct HomeView: View {
                                     .font(.system(size: 12))
                                     .foregroundColor(.gray)
                             }
+                            Divider()
                         }.padding(12)
                     }
                 }.frame(minWidth: 0,
@@ -374,7 +381,7 @@ struct RechargeAndPaymentGridView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 4)
                                 .padding(.vertical, 2)
-                                .background(Color("SecondaryColor"))
+                                .background(Color("CashbackBackground"))
                                 .cornerRadius(8)
                         }
                     }.frame(width: 90, height: 120, alignment: .center)

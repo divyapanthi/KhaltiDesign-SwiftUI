@@ -7,107 +7,106 @@
 
 import SwiftUI
 
-enum TabBarItem: String, CaseIterable {
-    
-    case home
-    case support
-    case qr
-    case transaction
-    case menu
-    
-    var icon: String {
-            switch self {
-            case .home: return "house"
-            case .support: return "phone.and.waveform.fill"
-            case .qr: return "qrcode"
-            case .transaction: return "newspaper.fill"
-            case .menu: return "square.grid.3x3.middle.filled"
-            }
-        }
-    
-    var title: String {
-            switch self {
-            case .home: return "Home"
-            case .support: return "Support"
-            case .qr: return "Scan & Pay"
-            case .transaction: return "Transaction"
-            case .menu: return "Menu"
-            }
-        }
 
-}
 
-struct TabBarView: View {
+struct CustomTabBar: View {
     
-    @State private var isHomeSelected: Bool = true
-    @State private var selectedTab = 0
+    @StateObject var viewRouter: ViewRouter
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            HomeView().tabItem {
-                Image(systemName: "house")
-                    .frame(width: 14, height: 14)
-                Text("Home")
-                    .font(.system(size: 12))
-            }.tag(0)
-            
-            HomeView().tabItem{
-                Image(systemName: "phone.and.waveform.fill")
-                Text("Support")
-                    .font(.system(size: 12))
-
-            }.tag(1)
-            
-            HomeView().tabItem {
-                Image(systemName: "qrcode")
-                Text("Scan & Pay")
-                    .font(.system(size: 12))
-            }.tag(2)
-            
-            HomeView().tabItem{
-                Image(systemName: "newspaper.fill")
-                Text("Transaction")
-                    .font(.system(size: 12))
-
-            }.tag(3)
-            HomeView().tabItem{
-                Image(systemName: "square.grid.3x3.middle.filled")
-                Text("Menu")
-                    .font(.system(size: 12))
-
-            }.tag(4)
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                switch viewRouter.currentPage {
+                case .home:
+                    HomeView()
+                    
+                case .support:
+                    HomeView()
+                    
+                case .scanPay:
+                    HomeView()
+                    
+                case .transactions:
+                    Text("Transactions")
+                    
+                case .menu:
+                    HomeView()
+                    
+                    
+                }
+                Spacer()
+                HStack {
+                    TabBarIcon(viewRouter: viewRouter, assignedPage: .home, width: geometry.size.width/6, height: geometry.size.width/22, systemIconName: "house.fill", tabName: "Home")
+                    TabBarIcon(viewRouter: viewRouter, assignedPage: .support, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "phone.and.waveform.fill", tabName: "Support")
+                    
+                    if viewRouter.currentPage == .home {
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    .foregroundColor(Color("PrimaryColor"))
+                                    .frame(width: geometry.size.width/7, height: geometry.size.width/7)
+                                    .shadow(radius: 2)
+                                Image(systemName: "qrcode")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: geometry.size.width/9-18, height: geometry.size.width/9-18)
+                                    .foregroundColor(.white)
+                                
+                            }
+                            Text("Scan & Pay")
+                                .fontWeight(.regular)
+                                .font(.system(size: 10))
+                                .foregroundColor(.black
+                                    .opacity(0.5))
+                        }.offset(y: -geometry.size.height/9/3)
+                    }
+                    
+                    else {
+                        TabBarIcon(viewRouter: viewRouter, assignedPage: .transactions, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "qrcode", tabName: "Scan & Pay")
+                    }
+                    
+                    TabBarIcon(viewRouter: viewRouter, assignedPage: .transactions, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "newspaper.fill", tabName: "Transaction")
+                    TabBarIcon(viewRouter: viewRouter, assignedPage: .menu, width: geometry.size.width/5, height: geometry.size.width/22, systemIconName: "square.grid.3x3", tabName: "Menu")
+                    
+                }
+                .frame(width: geometry.size.width, height: geometry.size.height/10)
+                .background(Color("SecondaryColor"))
+            }
+            .edgesIgnoringSafeArea([.bottom, .top])
         }
-        .accentColor(Color("PrimaryColor"))
     }
 }
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        CustomTabBar(viewRouter: ViewRouter())
     }
 }
 
-
-struct ButtonView {
+struct TabBarIcon: View {
+    @StateObject var viewRouter: ViewRouter
+    @State var isSelectedIndex = 0
+    let assignedPage: Page
+    let width, height: CGFloat
+    let systemIconName, tabName: String
     var body: some View {
         VStack {
-            Button(action: {
-                // Action to perform when the button is tapped
-            }) {
-                Image(systemName: "qrcode")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 30)
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
-            }
-            .background(Color("PrimaryColor"))
-            .foregroundColor(.white)
-            
-            Text("Scan & Pay")
-                .font(.system(size: 12))
+            Image(systemName: systemIconName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: width, height: height)
+                .padding(.top, 10)
+            Text(tabName)
+                .fontWeight(.regular)
+                .font(.system(size: 10))
+            Spacer()
         }
+        .padding(.horizontal, -4)
+        .onTapGesture {
+            viewRouter.currentPage = assignedPage
+        }
+        .foregroundColor(viewRouter.currentPage == assignedPage ? Color("PrimaryColor") : .black.opacity(0.5))
         
     }
-
 }

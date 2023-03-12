@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct KhaltiDesign_SwiftUIApp: App {
+    @StateObject var viewRouter =  ViewRouter()
     var body: some Scene {
         WindowGroup {
-            TabBarView()
+            CustomTabBar(viewRouter: viewRouter)
         }
     }
 }
