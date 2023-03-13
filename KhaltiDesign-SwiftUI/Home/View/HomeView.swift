@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    @State private var currentIndex = 0
-    let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+
     let adList = adListData()
 
     
@@ -74,34 +72,7 @@ struct HomeView: View {
                     .background(.white)
                     .cornerRadius(8)
                     
-                    GeometryReader { proxy in
-                        TabView (selection: $currentIndex){
-                            ForEach(adList.indices) { index in
-                                Image(adList[index].image)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .withFrame(FrameOptions(width: 350, height: 110, alignment: .leading))
-                                    .cornerRadius(8)
-                                    .padding(.leading, 20)
-                                    .padding(.trailing, 20)
-                                    .padding(.vertical, 20)
-                            }
-                        }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                            .padding()
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                            .onReceive(timer) { _ in
-                                withAnimation {
-                                    currentIndex = currentIndex < adList.count ? currentIndex + 1 : 0
-
-                                }
-                            }
-                    }
-                    .frame(minWidth: 200, maxWidth: .infinity,  minHeight: 140, maxHeight: .infinity)
-                
-                .background(.white)
-                .cornerRadius(8)
+                AutoScrollAdImagesView()
                 
                 VStack {
                     TitleTextView(title: "Registration and Enrollments")
@@ -158,20 +129,7 @@ struct HomeView: View {
                     BorderedHStack(loopOn: recentlyAddedServices)
                 }
                 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(adList) { item in
-                            Image(item.image)
-                                .resizable()
-                                .scaledToFill()
-                                .withFrame(FrameOptions(width: 350, height: 110, alignment: .leading))
-                                .cornerRadius(8)
-                                .padding(.leading, 20)
-                                .padding(.trailing, 20)
-                                .padding(.vertical, 20)
-                        }
-                    }
-                }
+                AutoScrollAdImagesView()
                 
             }.padding(.vertical, 12)
                 .background(.white)
@@ -251,7 +209,7 @@ struct HomeView: View {
             .background(.white)
             .cornerRadius(8)
             
-        }.background(.gray.opacity(0.15))
+        }.background(Color("SecondaryColor"))
         
             .onAppear{
                 UIScrollView.appearance().bounces = false
@@ -275,12 +233,14 @@ struct RechargeAndPaymentGridView: View {
     
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()) ]
     
+    @State private var isExpanded = false
+    
     var body: some View {
 
             VStack {
                 TitleTextView(title: "Recharge and Bill Payments")
                 LazyVGrid(columns: columns, alignment: .center) {
-                    ForEach(payments) { item in
+                    ForEach(payments.prefix(isExpanded ? payments.count : 12)) { item in
                         VStack(alignment: .center, spacing: 4) {
                             ImageButtonView(systemImage: item.imageIcon, imageWidth: 22, imageHeight: 22, imageAccentColor: Color("PrimaryColor"), action: {})
                             CustomTextView(title: item.title, textWidth: 100, textHeight: 36)
@@ -301,8 +261,28 @@ struct RechargeAndPaymentGridView: View {
                         }.frame(width: 90, height: 120, alignment: .center)
                         
                     }
+                }.padding(.horizontal, 20)
+                
+                if payments.count > 12 {
+                    Button(action: {
+                        withAnimation(.spring(response: 1.5, dampingFraction: 0.7)) {
+                            isExpanded.toggle()
+
+                        }
+                    }) {
+                        HStack{
+                            Text(isExpanded ? "VIEW LESS" : "VIEW MORE")
+                                .font(.system(size: 10))
+                                .fontWeight(.medium)
+                            Image(systemName: isExpanded ? "chevron.up" : "chevron.down").font(.system(size: 12))
+                        
+                        }}
+                    .padding(10)
+                    .foregroundColor(Color("PrimaryColor"))
+                    .background(Color("SecondaryColor"))
+                    .cornerRadius(20)
+                    Spacer()
                 }
-                .padding(.horizontal, 20)
                 
             }
             
@@ -322,7 +302,7 @@ struct HorizontalScrollView: View {
             HStack {
                 ForEach(loopOn) { item in
                     VStack {
-                        ImageButtonView(systemImage: item.image, imageWidth: 30, imageHeight: 24, imageAccentColor: Color("PrimaryColor"), action: {})
+                        ImageButtonView(systemImage: item.image, imageWidth: 25, imageHeight: 20, imageAccentColor: Color("PrimaryColor"), action: {})
                         CustomTextView(title: item.title, textWidth: 80, textHeight: 36)
                     }.frame(width: 84, height: 80, alignment: .center)
                 }
@@ -482,4 +462,39 @@ struct TitleTextView: View {
 }
 func adListData() -> [AdItem] {
     return adList
+}
+
+struct AutoScrollAdImagesView: View {
+    @State private var currentIndex = 0
+    let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    var body: some View {
+        GeometryReader { proxy in
+            TabView (selection: $currentIndex){
+                ForEach(adList.indices) { index in
+                    Image(adList[index].image)
+                        .resizable()
+                        .scaledToFill()
+                        .withFrame(FrameOptions(width: 380, height: 110, alignment: .leading))
+                        .cornerRadius(8)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
+                        .padding(.vertical, 20)
+                }
+            }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                .clipShape(RoundedRectangle(cornerRadius: 5))
+                .padding()
+                .frame(width: proxy.size.width, height: proxy.size.height)
+                .onReceive(timer) { _ in
+                    withAnimation {
+                        currentIndex = currentIndex < adList.count ? currentIndex + 1 : 0
+                        
+                    }
+                }
+        }
+        .frame(minWidth: 200, maxWidth: .infinity,  minHeight: 140, maxHeight: .infinity)
+        
+        .background(.white)
+        .cornerRadius(8)
+    }
 }
