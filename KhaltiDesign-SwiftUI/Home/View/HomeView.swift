@@ -11,7 +11,8 @@ struct HomeView: View {
     
     @State private var currentIndex = 0
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
-    
+    let adList = adListData()
+
     
     var body: some View {
         
@@ -31,7 +32,6 @@ struct HomeView: View {
                     Text("with Family!")
                         .fontWeight(.medium)
                         .font(.system(size: 12))
-                    
                     
                     Spacer()
                     TextButton(title: "Buy Tickets", textColor: Color("CashbackBackground"), action: {})
@@ -76,8 +76,8 @@ struct HomeView: View {
                     
                     GeometryReader { proxy in
                         TabView (selection: $currentIndex){
-                            ForEach(0..<adList.count) { item in
-                                Image("girl")
+                            ForEach(adList.indices) { index in
+                                Image(adList[index].image)
                                     .resizable()
                                     .scaledToFill()
                                     .withFrame(FrameOptions(width: 350, height: 110, alignment: .leading))
@@ -85,15 +85,17 @@ struct HomeView: View {
                                     .padding(.leading, 20)
                                     .padding(.trailing, 20)
                                     .padding(.vertical, 20)
-                                    .overlay(Color.black.opacity(0.4))
-                                    .tag(item)
                             }
-                        }.tabViewStyle(PageTabViewStyle())
+                        }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             .padding()
                             .frame(width: proxy.size.width, height: proxy.size.height)
                             .onReceive(timer) { _ in
-                                currentIndex = currentIndex < adList.count ? currentIndex + 1 : 0
+                                withAnimation {
+                                    currentIndex = currentIndex < adList.count ? currentIndex + 1 : 0
+
+                                }
                             }
                     }
                     .frame(minWidth: 200, maxWidth: .infinity,  minHeight: 140, maxHeight: .infinity)
@@ -304,7 +306,7 @@ struct RechargeAndPaymentGridView: View {
                 
             }
             
-            .padding(.vertical, 12)
+            .padding(.vertical, 14)
             .background(.white)
         .cornerRadius(8)
         }
@@ -477,4 +479,7 @@ struct TitleTextView: View {
             .padding(.horizontal, 12)
         
     }
+}
+func adListData() -> [AdItem] {
+    return adList
 }
