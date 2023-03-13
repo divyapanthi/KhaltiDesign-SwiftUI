@@ -15,199 +15,216 @@ struct HomeView: View {
     var body: some View {
         
         ScrollView(showsIndicators: false) {
-            TopView()
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("  Watch ")
-                        .fontWeight(.medium)
-                        .font(.system(size: 12))
-                    +
-                    Text("Chhakka Panja 4 ")
-                        .fontWeight(.regular)
-                        .font(.system(size: 12))
-                    +
+            VStack {
+                TopView()
+                VStack {
+                    HStack {
+                        Group {
+                            Text("Watch ")
+                                .fontWeight(.medium)
+                                .font(.system(size: 12))
+                            +
+                            Text("Chhakka Panja 4 ")
+                                .fontWeight(.regular)
+                                .font(.system(size: 12))
+                            +
+                            Text("with Family!")
+                                .fontWeight(.medium)
+                                .font(.system(size: 12))
+                        }.padding(.leading, 10)
+                        Spacer()
+                        TextButton(title: "Buy Tickets", textColor: Color("CashbackBackground"), action: {})
+                    }.addBorder(color: Color("CashbackBackground"), width: 0.8, cornerRadius: 4)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
                     
-                    Text("with Family!")
-                        .fontWeight(.medium)
-                        .font(.system(size: 12))
+                    RechargeAndPaymentGridView()
                     
                     Spacer()
-                    TextButton(title: "Buy Tickets", textColor: Color("CashbackBackground"), action: {})
-                }.addBorder(color: Color("CashbackBackground"), width: 0.8, cornerRadius: 4)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                
-                RechargeAndPaymentGridView()
-                
-                Spacer()
-                VStack {
-                    Image("ad1")
-                        .resizable()
-                        .frame(height: 130)
+                    VStack {
+                        Image("ad1")
+                            .resizable()
+                            .frame(height: 130)
+                            .cornerRadius(8)
+                            .padding(.leading, 14)
+                            .padding(.trailing, 14)
+                            .padding(.vertical, 20)
+                            .aspectRatio(contentMode: .fill)
+                    }.frame(minWidth: 0,
+                            maxWidth: .infinity,
+                            minHeight: 0,
+                            maxHeight: .infinity,
+                            alignment: .topLeading)
+                    .background(.white)
+                    .background(.red)
+                    .cornerRadius(8)
+                    
+                    VStack {
+                        TitleTextView(title: "Featured Services")
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+
+                        HorizontalScrollView(loopOn: featuredServices)
+                    }.padding(.vertical, 12)
+                        .background(.white)
                         .cornerRadius(8)
-                        .padding(.leading, 14)
-                        .padding(.trailing, 14)
-                        .padding(.vertical, 20)
+                    
+                    VStack {
+                        TitleTextView(title: "Other Services")
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+
+                        HorizontalScrollView(loopOn: otherServices)
+                    }.padding(.vertical, 12)
+                        .background(.white)
+                        .cornerRadius(8)
+                        
+                    AutoScrollAdImagesView()
+                    
+                    VStack {
+                        TitleTextView(title: "Registration & Enrollments ")
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            BorderedHStack(loopOn: registrationServices)
+                            
+                        }
+                    }.padding(.vertical, 12)
+                        .background(.white)
+                        .cornerRadius(8)
+                    
+                    VStack {
+                        TitleTextView(title: "Insurance Services")
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            BorderedHStack(loopOn: insuranceServices)
+                            
+                        }
+                    }.padding(.vertical, 12)
+                        .background(.white)
+                        .cornerRadius(8)
+                    
+                    VStack {
+                        VStack {
+                            TitleTextView(title: "Popular Services")
+                                .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                BorderedHStack(loopOn: popularServices)
+                                
+                            }
+                        }
+                        Spacer(minLength: 40)
+                        VStack {
+                            HStack {
+                                TitleTextView(title: "Popular Government Services")
+                                Spacer()
+                                CustomTextView(title: "SEE ALL", fontSize: 16)
+                                    .padding(.trailing, 10)
+                            }
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                BorderedHStack(loopOn: popularGovernmentServices)
+                            }
+                        }
+                        
+                    }.padding(.vertical, 12)
+                        .background(.white)
+                        .cornerRadius(8)
+                }
+                VStack {
+                    TitleTextView(title: "Recently Added Services")
+                        .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        BorderedHStack(loopOn: recentlyAddedServices)
+                    }
+                    
+                    AutoScrollAdImagesView()
+                    
+                }.padding(.vertical, 12)
+                    .background(.white)
+                    .cornerRadius(8)
+                
+                VStack {
+                    TitleTextView(title: "Send Money to Vendor")
+                        .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        BorderedHStack(loopOn: sendMoneyToVendor)
+                        
+                    }
+                    
+                    VStack {
+                        Image("ad3")
+                            .resizable()
+                            .scaledToFill()
+                            .withFrame(FrameOptions(width: .infinity, height: 80))
+                            .cornerRadius(8)
+                        
+                        Spacer(minLength: 30)
+                        TitleTextView(title: "We are accepted Online At")
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+
+                        HorizontalScrollView(loopOn: acceptedOnline)
+                        
+                    }
+                    
+                } .padding(.vertical, 12)
+                    .background(.white)
+                    .cornerRadius(8)
+                
+                VStack {
+                    Image("ad4")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 100)
+                        .cornerRadius(8)
+                        .padding(30)
                         .aspectRatio(contentMode: .fill)
                 }.frame(minWidth: 0,
                         maxWidth: .infinity,
                         minHeight: 0,
                         maxHeight: .infinity,
                         alignment: .topLeading)
+                .padding(.vertical, 12)
                 .background(.white)
-                .background(.red)
                 .cornerRadius(8)
                 
                 VStack {
-                    TitleTextView(title: "Featured Services")
-                    HorizontalScrollView(loopOn: featuredServices)
-                }.padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
-                
-                VStack {
-                    TitleTextView(title: "Other Services")
-                    HorizontalScrollView(loopOn: otherServices)
-                }.padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
-                    
-                AutoScrollAdImagesView()
-                
-                VStack {
-                    TitleTextView(title: "Registration and Enrollments")
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        BorderedHStack(loopOn: registrationServices)
-                        
-                    }
-                }.padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
-                
-                VStack {
-                    TitleTextView(title: "Insurance Services")
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        BorderedHStack(loopOn: insuranceServices)
-                        
-                    }
-                }.padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
-                
-                VStack {
-                    VStack {
-                        TitleTextView(title: "Popular Services")
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            BorderedHStack(loopOn: popularServices)
+                    ForEach(Array(supportList.enumerated()), id: \.1.id) { index, support in
+                        HStack(alignment: .center, spacing: 20) {
+                            Image(systemName: support.image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .withFrame(FrameOptions(width: 22, height: 22, alignment: .leading))
+                                .foregroundColor(Color.black.opacity(0.7))
                             
-                        }
-                    }
-                    Spacer(minLength: 40)
-                    VStack {
-                        HStack {
-                            TitleTextView(title: "Popular Government Services")
-                            CustomTextView(title: "SEE ALL", fontSize: 16)
-                        }
-                        .padding(.horizontal)
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            BorderedHStack(loopOn: popularGovernmentServices)
-                        }
-                    }
-                    
-                }.padding(.vertical, 12)
-                    .background(.white)
-                    .cornerRadius(8)
-            }
-            
-            VStack {
-                TitleTextView(title: "Recently Added Services")
-                ScrollView(.horizontal, showsIndicators: false) {
-                    BorderedHStack(loopOn: recentlyAddedServices)
-                }
-                
-                AutoScrollAdImagesView()
-                
-            }.padding(.vertical, 12)
-                .background(.white)
-                .cornerRadius(8)
-            
-            VStack {
-                TitleTextView(title: "Send Money to Vendor")
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    BorderedHStack(loopOn: sendMoneyToVendor)
-                    
-                }
-                
-                VStack {
-                    Image("ad3")
-                        .resizable()
-                        .scaledToFill()
-                        .withFrame(FrameOptions(width: .infinity, height: 80))
-                        .cornerRadius(8)
-                    
-                    Spacer(minLength: 30)
-                    TitleTextView(title: "We are accepted Online At")
-                    HorizontalScrollView(loopOn: acceptedOnline)
-                    
-                }
-                
-            } .padding(.vertical, 12)
-                .background(.white)
-                .cornerRadius(8)
-            
-            VStack {
-                Image("ad4")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 100)
-                    .cornerRadius(8)
-                    .padding(30)
-                    .aspectRatio(contentMode: .fill)
-            }.frame(minWidth: 0,
-                    maxWidth: .infinity,
-                    minHeight: 0,
-                    maxHeight: .infinity,
-                    alignment: .topLeading)
-            .padding(.vertical, 12)
-            .background(.white)
-            .cornerRadius(8)
-            
-            
-            VStack {
-                ForEach(Array(supportList.enumerated()), id: \.1.id) { index, support in
-                    HStack(alignment: .center, spacing: 20) {
-                        Image(systemName: support.image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .withFrame(FrameOptions(width: 22, height: 22, alignment: .center))
-                            .foregroundColor(Color.black.opacity(0.7))
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(support.title)
-                                .font(.system(size: 14))
-                            Text(support.subTitle)
-                                .font(.system(size: 12))
-                                .foregroundColor(.gray)
-                            if index != supportList.count - 1 {
-                                Spacer()
+                            VStack(alignment: .leading, spacing: 10) {
+    
+                                Text(support.title)
+                                    .font(.system(size: 14))
+                                Text(support.subTitle)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.gray)
                                 Divider()
+//                                if index != supportList.count - 1 {
+//                                    Divider()
+//
+//                                }
                             }
-                        }
-                    }.padding(12)
-                }
-            }.frame(minWidth: 0,
-                    maxWidth: .infinity,
-                    minHeight: 0,
-                    maxHeight: .infinity,
-                    alignment: .topLeading)
-            .padding(.vertical, 12)
-            .background(.white)
-            .cornerRadius(8)
+                            
+                            
+                        }.padding(12)
+                    }
+                }.frame(minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .topLeading)
+                .padding(.vertical, 12)
+                .background(.white)
+                .cornerRadius(8)
+                
+            }
             
         }.background(Color("SecondaryColor"))
         
@@ -238,7 +255,11 @@ struct RechargeAndPaymentGridView: View {
     var body: some View {
 
             VStack {
+                                    
                 TitleTextView(title: "Recharge and Bill Payments")
+                    .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+
+
                 LazyVGrid(columns: columns, alignment: .center) {
                     ForEach(payments.prefix(isExpanded ? payments.count : 12)) { item in
                         VStack(alignment: .center, spacing: 4) {
@@ -359,15 +380,6 @@ struct BalanceView: View {
                     .font(.system(size: 11))
             }
         }
-        .frame(
-            width: 140,
-            height: 80)
-        .foregroundColor(Color("PrimaryColor"))
-        .padding(.trailing, 30)
-        .padding(.leading, -10)
-        
-        .background(.white)
-        .cornerRadius(8)
     }
 }
 
@@ -414,9 +426,18 @@ struct TopView: View {
                 }.padding(.trailing)
             }
             
-            HStack() {
+            HStack(alignment: .center) {
                 ZStack {
                     BalanceView()
+                        .frame(
+                            width: 140,
+                            height: 80)
+                        .foregroundColor(Color("PrimaryColor"))
+                        .padding(.trailing, 30)
+                        .padding(.leading, -10)
+                        
+                        .background(.white)
+                        .cornerRadius(8)
                     ReloadBalanceButton()
                 }
                 
@@ -455,7 +476,6 @@ struct TitleTextView: View {
         Text(title)
             .font(.system(size: 14))
             .fontWeight(.medium)
-            .withFrame(FrameOptions(alignment: .trailing, maxWidth: .infinity ))
             .padding(.horizontal, 12)
         
     }

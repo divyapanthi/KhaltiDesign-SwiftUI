@@ -19,6 +19,7 @@
 		DA7A106829BD851200EB2618 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A106729BD851200EB2618 /* ViewRouter.swift */; };
 		DA7A106C29BDAA3200EB2618 /* ViewBuilders.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A106B29BDAA3200EB2618 /* ViewBuilders.swift */; };
 		DA7A1EB529BC8DA7002372FF /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A1EB429BC8DA7002372FF /* ViewExtensions.swift */; };
+		DA89246929BFBAF00076ED3C /* TESTVIEW.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA89246829BFBAF00076ED3C /* TESTVIEW.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		DA7A106729BD851200EB2618 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		DA7A106B29BDAA3200EB2618 /* ViewBuilders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBuilders.swift; sourceTree = "<group>"; };
 		DA7A1EB429BC8DA7002372FF /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		DA89246829BFBAF00076ED3C /* TESTVIEW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TESTVIEW.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				DA134AC029B84FDE0038B86B /* HomeView.swift */,
+				DA89246829BFBAF00076ED3C /* TESTVIEW.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				DA40DA0929BA61FC00D770AD /* KhaltiSupportModel.swift in Sources */,
 				DA2FF65729B9D4BE00D1E4B9 /* AdItemModel.swift in Sources */,
 				DA7A1EB529BC8DA7002372FF /* ViewExtensions.swift in Sources */,
+				DA89246929BFBAF00076ED3C /* TESTVIEW.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

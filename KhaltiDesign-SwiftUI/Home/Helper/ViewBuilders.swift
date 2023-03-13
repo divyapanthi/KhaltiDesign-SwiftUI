@@ -21,9 +21,6 @@ func TextButton(title: String, textColor: Color, action: @escaping () -> Void) -
     
 }
 
-
-
-
 func CustomTextView(title: String, textWidth: CGFloat? = nil, textHeight: CGFloat? = nil, fontSize: CGFloat? = 12) -> some View {
     Text(title)
         .font(.system(size: fontSize ?? 12))
