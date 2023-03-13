@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AdItem : Identifiable, Hashable{
+struct AdItem : Identifiable{
    let id = UUID()
    let image: String
 }
