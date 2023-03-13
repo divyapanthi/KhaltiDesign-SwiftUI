@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct KhaltiAd : Identifiable{
+struct AdItem : Identifiable, Hashable{
    let id = UUID()
    let image: String
 }
 
 let adList = [
-    KhaltiAd( image: "ad2"),
-    KhaltiAd( image: "ad3"),
-    KhaltiAd( image: "ad4"),
-    KhaltiAd( image: "ad1")
+    AdItem( image: "ad2"),
+    AdItem( image: "ad3"),
+    AdItem( image: "ad4"),
+    AdItem( image: "ad1")
 ]
 

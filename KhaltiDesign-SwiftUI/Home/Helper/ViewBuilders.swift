@@ -22,13 +22,6 @@ func TextButton(title: String, textColor: Color, action: @escaping () -> Void) -
 }
 
 
-func TitleTextView(title: String) -> some View {
-    Text(title)
-        .font(.system(size: 14))
-        .fontWeight(.medium)
-        .withFrame(FrameOptions(alignment: .leading, maxWidth: .infinity))
-        .padding(.horizontal, 12)
-}
 
 
 func CustomTextView(title: String, textWidth: CGFloat? = nil, textHeight: CGFloat? = nil, fontSize: CGFloat? = 12) -> some View {

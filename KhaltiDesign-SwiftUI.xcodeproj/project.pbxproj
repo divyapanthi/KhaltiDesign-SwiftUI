@@ -19,7 +19,6 @@
 		DA7A106829BD851200EB2618 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A106729BD851200EB2618 /* ViewRouter.swift */; };
 		DA7A106C29BDAA3200EB2618 /* ViewBuilders.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A106B29BDAA3200EB2618 /* ViewBuilders.swift */; };
 		DA7A1EB529BC8DA7002372FF /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A1EB429BC8DA7002372FF /* ViewExtensions.swift */; };
-		DABBBBD829BE53C7008F3B55 /* EdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBBBD729BE53C7008F3B55 /* EdgeInsets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		DA7A106729BD851200EB2618 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		DA7A106B29BDAA3200EB2618 /* ViewBuilders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBuilders.swift; sourceTree = "<group>"; };
 		DA7A1EB429BC8DA7002372FF /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
-		DABBBBD729BE53C7008F3B55 /* EdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +118,6 @@
 			children = (
 				DA7A1EB429BC8DA7002372FF /* ViewExtensions.swift */,
 				DA7A106B29BDAA3200EB2618 /* ViewBuilders.swift */,
-				DABBBBD729BE53C7008F3B55 /* EdgeInsets.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -223,7 +220,6 @@
 				DA134AC129B84FDE0038B86B /* HomeView.swift in Sources */,
 				DA134ACD29B86DCB0038B86B /* CustomTabBar.swift in Sources */,
 				DA7A106C29BDAA3200EB2618 /* ViewBuilders.swift in Sources */,
-				DABBBBD829BE53C7008F3B55 /* EdgeInsets.swift in Sources */,
 				DA134AD129B8D9F10038B86B /* RechargeAndPaymentModel.swift in Sources */,
 				DA134ABF29B84FDE0038B86B /* KhaltiDesign_SwiftUIApp.swift in Sources */,
 				DA2FF65529B9AB7300D1E4B9 /* ServicesModel.swift in Sources */,
